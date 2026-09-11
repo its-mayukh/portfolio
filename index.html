@@ -55,12 +55,12 @@
             text-decoration: none;
         }
 
+        /* Base image rule: no forced aspect ratio — every image keeps its
+           natural proportions. Project-specific ratios are opt-in below. */
         img {
             display: block;
             width: 100%;
             height: auto;
-            object-fit: cover;
-            aspect-ratio: 2 / 3; /* Locks all images globally to a 2:3 ratio */
         }
 
         figure {
@@ -84,8 +84,10 @@
             color: var(--muted);
         }
 
+        /* Mobile / tablet hero size (< 1100px). Overridden by the
+           viewport-aware desktop rule below at >= 1100px. */
         .display {
-            font-size: clamp(2.5rem, 11vw, 3.5rem); /* Keeps mobile text reasonably small */
+            font-size: clamp(2.8rem, 8.5vw, 4.5rem);
             line-height: 1.05;
             text-transform: uppercase;
             letter-spacing: -0.02em;
@@ -134,7 +136,6 @@
         }
 
         .nav-links-desktop { display: none; }
-        .nav-links-mobile { display: block; }
 
         /* ==================================================
            HERO
@@ -149,6 +150,9 @@
 
         .hero-title {
             max-width: 95%;
+            /* Viewport-aware breathing room so the title never collides
+               with the footer rule, even on short desktop displays. */
+            margin-bottom: clamp(1.5rem, 4vh, 5rem);
         }
 
         .hero-footer {
@@ -188,35 +192,44 @@
         .mb-2 { margin-bottom: 2rem; }
 
         /* ==================================================
-           MOBILE COMPOSITIONS (EDITORIAL RHYTHM)
+           MOBILE / TABLET COMPOSITIONS (< 1100px)
+           Single-column stack: full width, left aligned, natural
+           aspect ratio, no asymmetric width/alignment modifiers.
            ================================================== */
-        @media (max-width: 899px) {
+        @media (max-width: 1099px) {
             .campaign-visuals {
                 display: flex;
                 flex-direction: column;
+                gap: 2rem;
             }
 
-            .campaign-visuals figure + figure {
-                margin-top: 1.5rem;
+            .campaign-visuals figure {
+                width: 100%;
+                margin: 0;
             }
 
-            /* Width and Alignment Modifiers for Mobile */
-            .m-w-100 { width: 100%; }
-            .m-w-88  { width: 88%; }
-            .m-w-82  { width: 82%; }
-            .m-align-right { margin-left: auto; }
+            .campaign-visuals img {
+                width: 100%;
+                height: auto;
+                aspect-ratio: auto;
+                object-fit: contain;
+            }
+
         }
 
         /* ==================================================
-           DESKTOP COMPOSITIONS (SYSTEMATIC 12-COL GRID)
+           DESKTOP COMPOSITIONS (SYSTEMATIC 12-COL GRID, >= 1100px)
            ================================================== */
-        @media (min-width: 900px) {
+        @media (min-width: 1100px) {
+            /* Viewport-aware fluid hero sizing: scales with both width
+               and height so it stays proportionate on 2K/4K displays
+               without becoming oversized, and stays comfortable on
+               short 1366×768-type laptop screens. */
             .display {
-                font-size: clamp(4rem, 8vw, 8rem); /* Reverts to massive hero text on desktop */
+                font-size: clamp(4.5rem, min(7vw, 12vh), 16rem);
             }
 
             .nav-links-desktop { display: flex; gap: 3vw; }
-            .nav-links-mobile { display: none; }
 
             .hero {
                 padding: 6vw 0 3vw 0;
@@ -278,7 +291,7 @@
             padding-top: 2rem;
         }
 
-        @media (min-width: 900px) {
+        @media (min-width: 1100px) {
             .contact {
                 padding: 25vh 0 15vh 0;
             }
@@ -289,11 +302,10 @@
         }
         /* CAMPAIGN 04 OVERRIDES */
         .comp-4 figure img {
-            aspect-ratio: auto; 
             border: 1px solid var(--border); 
         }
 
-        @media (min-width: 900px) {
+        @media (min-width: 1100px) {
             /* Changes the default 3 columns to 2 columns so they fill 100% of the right side */
             .campaign-visuals.comp-4 {
                 grid-template-columns: repeat(2, 1fr);
@@ -301,7 +313,8 @@
         }
         /* CAMPAIGN 05 OVERRIDES */
         .comp-5 figure img {
-            aspect-ratio: 3 / 4; /* Forces only the event posters to 3:4 */
+            aspect-ratio: 3 / 4; /* Event posters genuinely need this fixed ratio */
+            object-fit: cover;
         }
 
         /* ==================================================
@@ -375,9 +388,6 @@
                 <a href="#work">WORK</a>
                 <a href="#contact">CONTACT</a>
             </div>
-            <div class="meta muted nav-links-mobile">
-                <span>01/03</span>
-            </div>
         </nav>
 
         <!-- HERO -->
@@ -417,15 +427,15 @@
                 </div>
                 
                 <div class="campaign-visuals">
-                    <figure class="m-w-100">
+                    <figure>
                         <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_03_46%20AM.png" alt="Missha Campaign 01">
                         <figcaption class="meta muted">CAMP 01 / STILL</figcaption>
                     </figure>
-                    <figure class="m-w-88 m-align-right">
+                    <figure>
                         <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_04_01%20AM.png" alt="Missha Campaign 02">
                         <figcaption class="meta muted">CAMP 01 / HERO</figcaption>
                     </figure>
-                    <figure class="m-w-100">
+                    <figure>
                         <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_04_09%20AM.png" alt="Missha Campaign 03">
                         <figcaption class="meta muted">CAMP 01 / DETAIL</figcaption>
                     </figure>
@@ -446,15 +456,15 @@
                 </div>
                 
                 <div class="campaign-visuals">
-                    <figure class="m-w-88">
+                    <figure>
                         <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_04_33%20AM.png" alt="Laneige Campaign 01">
                         <figcaption class="meta muted">CAMP 02 / PORTRAIT</figcaption>
                     </figure>
-                    <figure class="m-w-100">
+                    <figure>
                         <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_04_45%20AM.png" alt="Laneige Campaign 02">
                         <figcaption class="meta muted">CAMP 02 / TEXTURE</figcaption>
                     </figure>
-                    <figure class="m-w-88 m-align-right">
+                    <figure>
                         <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_04_57%20AM.png" alt="Laneige Campaign 03">
                         <figcaption class="meta muted">CAMP 02 / LIGHTING</figcaption>
                     </figure>
@@ -475,15 +485,15 @@
                 </div>
                 
                 <div class="campaign-visuals">
-                    <figure class="m-w-100">
+                    <figure>
                        <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_38_20%20AM.png" alt="Skinella Campaign 01">
                         <figcaption class="meta muted">CAMP 03 / FOCUS</figcaption>
                     </figure>
-                    <figure class="m-w-82 m-align-right">
+                    <figure>
                         <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_38_31%20AM.png" alt="Skinella Campaign 02">
                         <figcaption class="meta muted">CAMP 03 / ENVIRONMENT</figcaption>
                     </figure>
-                    <figure class="m-w-100">
+                    <figure>
                         <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_38_43%20AM.png" alt="Skinella Campaign 03">
                         <figcaption class="meta muted">CAMP 03 / APPLICATION</figcaption>
                     </figure>
@@ -505,11 +515,11 @@
                 </div>
                 
                 <div class="campaign-visuals comp-4">
-                    <figure class="m-w-100">
+                    <figure>
                         <img src="./pictures/1.png" alt="IIMB DBE Brochure Spread 1">
                         <figcaption class="meta muted">CAMP 04 / SPREAD 01</figcaption>
                     </figure>
-                    <figure class="m-w-88 m-align-right">
+                    <figure>
                         <img src="./pictures/2.png" alt="IIMB DBE Brochure Spread 2">
                         <figcaption class="meta muted">CAMP 04 / SPREAD 02</figcaption>
                     </figure>
@@ -520,7 +530,7 @@
             <article class="campaign">
                 <div class="campaign-info">
                     <div class="meta muted mb-2">05 / EVENT & CAMPAIGN DESIGN</div>
-                    <h2 class="heading">DESIGNING FOR EVENTS AND PEOPLE</h2>
+                    <h2 class="heading">DESIGNING FOR EVENTS,<br>PEOPLE AND<br>PARTICIPATION.</h2>
                     <p class="body-text">A selection of visual communication created for student-led events and initiatives, spanning technology, entrepreneurship and campus competition.</p>
                     <div class="tags meta muted">
                         <span>EVENT DESIGN</span>
@@ -531,16 +541,16 @@
                 </div>
                 
                 <div class="campaign-visuals comp-5">
-                    <figure class="m-w-100">
-                        <img src="./pictures/Shadow a Startup Founder.png" alt="Vibecoding Hackathon">
+                    <figure>
+                        <img src="./pictures/Shadow a Startup Founder.png" alt="Shadow a Startup Founder">
                         <figcaption class="meta muted">CAMP 05 / SHADOW A STARTUP FOUNDER</figcaption>
                     </figure>
-                    <figure class="m-w-88 m-align-right">
-                        <img src="./pictures/Your paragraph text.png" alt="Shadow a Startup Founder">
+                    <figure>
+                        <img src="./pictures/Your paragraph text.png" alt="Quiz War">
                         <figcaption class="meta muted">CAMP 05 / QUIZ WAR</figcaption>
                     </figure>
-                    <figure class="m-w-100">
-                        <img src="./pictures/Q.png" alt="Quiz War">
+                    <figure>
+                        <img src="./pictures/Q.png" alt="Quiz Competition">
                         <figcaption class="meta muted">CAMP 05 / QUIZ COMPETITION</figcaption>
                     </figure>
                 </div>
@@ -573,7 +583,7 @@
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             let lenis;
 
-            if (!prefersReducedMotion && window.innerWidth >= 900) {
+            if (!prefersReducedMotion && window.innerWidth >= 1100) {
                 lenis = new Lenis({
                     duration: 1.5, 
                     smoothWheel: true,
