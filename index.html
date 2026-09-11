@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDDY — Visual Design & Art Direction</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==================================================
+           SYSTEM VARIABLES (LIGHT/DARK)
+           ================================================== */
+        :root {
+            --bg: #FAFAFA;
+            --fg: #111111;
+            --muted: #777777;
+            --border: rgba(0, 0, 0, 0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0F0F0F;
+                --fg: #F3F3F3;
+                --muted: #888888;
+                --border: rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        /* ==================================================
+           RESET & FOUNDATION
+           ================================================== */
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: 'IBM Plex Mono', monospace;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.5;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            aspect-ratio: 2 / 3; /* Locks all images globally to a 2:3 ratio */
+        }
+
+        figure {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        /* ==================================================
+           TYPOGRAPHY
+           ================================================== */
+        .meta {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .display {
+            font-size: clamp(2.5rem, 11vw, 3.5rem); /* Keeps mobile text reasonably small */
+            line-height: 1.05;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .heading {
+            font-size: clamp(1.8rem, 8vw, 3rem);
+            line-height: 1.1;
+            text-transform: uppercase;
+            margin: 0 0 1rem 0;
+            font-weight: 400;
+        }
+
+        .body-text {
+            font-size: clamp(13px, 3vw, 15px);
+            line-height: 1.6;
+            color: var(--muted);
+            max-width: 400px;
+            margin: 0 0 2rem 0;
+        }
+
+        .tags {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        /* ==================================================
+           LAYOUT CONTAINERS
+           ================================================== */
+        .container {
+            padding: 0 6vw;
+        }
+
+        /* ==================================================
+           NAVIGATION
+           ================================================== */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-links-desktop { display: none; }
+        .nav-links-mobile { display: block; }
+
+        /* ==================================================
+           HERO
+           ================================================== */
+        .hero {
+            min-height: 85svh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 4rem 0 2rem 0;
+        }
+
+        .hero-title {
+            max-width: 95%;
+        }
+
+        .hero-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .align-bottom {
+            text-align: right;
+        }
+
+        /* ==================================================
+           WORK SECTION (BASE)
+           ================================================== */
+        .campaign {
+            padding: 5rem 0 8rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .campaign:last-of-type {
+            border-bottom: none;
+        }
+
+        .campaign-info {
+            margin-bottom: 3.5rem;
+        }
+
+        .mb-2 { margin-bottom: 2rem; }
+
+        /* ==================================================
+           MOBILE COMPOSITIONS (EDITORIAL RHYTHM)
+           ================================================== */
+        @media (max-width: 899px) {
+            .campaign-visuals {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .campaign-visuals figure + figure {
+                margin-top: 1.5rem;
+            }
+
+            /* Width and Alignment Modifiers for Mobile */
+            .m-w-100 { width: 100%; }
+            .m-w-88  { width: 88%; }
+            .m-w-82  { width: 82%; }
+            .m-align-right { margin-left: auto; }
+        }
+
+        /* ==================================================
+           DESKTOP COMPOSITIONS (SYSTEMATIC 12-COL GRID)
+           ================================================== */
+        @media (min-width: 900px) {
+            .display {
+                font-size: clamp(4rem, 8vw, 8rem); /* Reverts to massive hero text on desktop */
+            }
+
+            .nav-links-desktop { display: flex; gap: 3vw; }
+            .nav-links-mobile { display: none; }
+
+            .hero {
+                padding: 6vw 0 3vw 0;
+            }
+
+            .campaign {
+                display: grid;
+                grid-template-columns: repeat(12, 1fr);
+                gap: 4vw; /* Separates the info block from the gallery block */
+                padding: 20vh 0; /* Substantial breathing room between campaigns */
+            }
+
+            .campaign-info {
+                grid-column: span 3; /* Left 3 columns */
+                margin-bottom: 0;
+                position: sticky;
+                top: 6vw;
+                align-self: flex-start;
+            }
+
+            /* Consistent 3-column side-by-side gallery for desktop */
+            .campaign-visuals {
+                grid-column: span 9; /* Right 9 columns */
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2vw; 
+                align-items: start; 
+            }
+
+            .campaign-visuals figure {
+                width: 100%;
+                margin: 0; /* Overrides any mobile margins like .m-align-right */
+            }
+        }
+
+        /* ==================================================
+           CONTACT
+           ================================================== */
+        .contact {
+            padding: 15vh 0 10vh 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        .contact-text {
+            font-size: clamp(1.2rem, 4vw, 2.5rem);
+            line-height: 1.4;
+            font-weight: 400;
+            max-width: 800px;
+            margin: 0;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+        }
+
+        @media (min-width: 900px) {
+            .contact {
+                padding: 25vh 0 15vh 0;
+            }
+            .contact-links {
+                flex-direction: row;
+                gap: 4vw;
+            }
+        }
+        /* CAMPAIGN 04 OVERRIDES */
+        .comp-4 figure img {
+            aspect-ratio: auto; 
+            border: 1px solid var(--border); 
+        }
+
+        @media (min-width: 900px) {
+            /* Changes the default 3 columns to 2 columns so they fill 100% of the right side */
+            .campaign-visuals.comp-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        /* CAMPAIGN 05 OVERRIDES */
+        .comp-5 figure img {
+            aspect-ratio: 3 / 4; /* Forces only the event posters to 3:4 */
+        }
+
+        /* ==================================================
+           INTERACTION & ENLARGEMENT MODIFICATIONS
+           ================================================== */
+        
+        /* Stop scroll on body when zoom is active */
+        body.is-zoomed {
+            overflow: hidden;
+        }
+
+        .campaign-visuals figure img {
+            cursor: zoom-in;
+            will-change: opacity;
+            transition: opacity 0.1s ease;
+        }
+
+        /* Minimal Backdrop */
+        .zoom-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 100;
+            transition: opacity 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+        }
+
+        .zoom-backdrop.active {
+            opacity: 0.98;
+            pointer-events: all;
+            cursor: zoom-out;
+        }
+
+        /* Floating Image Clone */
+        .zoom-clone {
+            position: fixed;
+            z-index: 101;
+            transform-origin: top left;
+            will-change: transform;
+            pointer-events: none;
+            cursor: zoom-out;
+        }
+
+        .zoom-clone.transitioning {
+            transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+        }
+
+        /* Accessibility: Respect Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            .zoom-clone.transitioning {
+                transition: none;
+            }
+            .zoom-backdrop {
+                transition: opacity 0.2s ease;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- HEADER -->
+        <nav>
+            <div class="meta">MAYUKH</div>
+            <div class="meta muted nav-links-desktop">
+                <a href="#work">WORK</a>
+                <a href="#contact">CONTACT</a>
+            </div>
+            <div class="meta muted nav-links-mobile">
+                <span>01/03</span>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <header class="hero">
+            <h1 class="display hero-title">
+                Visual work,<br>
+                shaped with AI,<br>
+                design &<br>
+                direction.
+            </h1>
+            
+            <div class="hero-footer meta muted">
+                <div class="footer-col">
+                    <span>VISUAL DESIGN</span>
+                    <span>AI / ART DIRECTION</span>
+                    <span>2026</span>
+                </div>
+                <div class="footer-col align-bottom">
+                    <span>SCROLL</span>
+                </div>
+            </div>
+        </header>
+
+        <main id="work">
+            
+            <!-- CAMPAIGN 01: MISSHA -->
+            <article class="campaign">
+                <div class="campaign-info">
+                    <div class="meta muted mb-2">01 / SUN CARE</div>
+                    <h2 class="heading">MISSHA ESSENCE<br>SUN SPF45 PA+++</h2>
+                    <p class="body-text">A playful beauty campaign built around sun, skin and everyday rituals, with a bright, tactile visual language.</p>
+                    <div class="tags meta muted">
+                        <span>AI GENERATION</span>
+                        <span>ART DIRECTION</span>
+                        <span>IMAGE EDITING</span>
+                    </div>
+                </div>
+                
+                <div class="campaign-visuals">
+                    <figure class="m-w-100">
+                        <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_03_46%20AM.png" alt="Missha Campaign 01">
+                        <figcaption class="meta muted">CAMP 01 / STILL</figcaption>
+                    </figure>
+                    <figure class="m-w-88 m-align-right">
+                        <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_04_01%20AM.png" alt="Missha Campaign 02">
+                        <figcaption class="meta muted">CAMP 01 / HERO</figcaption>
+                    </figure>
+                    <figure class="m-w-100">
+                        <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_04_09%20AM.png" alt="Missha Campaign 03">
+                        <figcaption class="meta muted">CAMP 01 / DETAIL</figcaption>
+                    </figure>
+                </div>
+            </article>
+
+            <!-- CAMPAIGN 02: LANEIGE -->
+            <article class="campaign">
+                <div class="campaign-info">
+                    <div class="meta muted mb-2">02 / LIP CARE</div>
+                    <h2 class="heading">LANEIGE LIP SLEEPING<br>MASK EX [BERRY]</h2>
+                    <p class="body-text">A bold beauty study exploring colour, skin texture and expressive portraiture through a monochromatic visual world.</p>
+                    <div class="tags meta muted">
+                        <span>AI GENERATION</span>
+                        <span>ART DIRECTION</span>
+                        <span>IMAGE COMPOSITING</span>
+                    </div>
+                </div>
+                
+                <div class="campaign-visuals">
+                    <figure class="m-w-88">
+                        <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_04_33%20AM.png" alt="Laneige Campaign 01">
+                        <figcaption class="meta muted">CAMP 02 / PORTRAIT</figcaption>
+                    </figure>
+                    <figure class="m-w-100">
+                        <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_04_45%20AM.png" alt="Laneige Campaign 02">
+                        <figcaption class="meta muted">CAMP 02 / TEXTURE</figcaption>
+                    </figure>
+                    <figure class="m-w-88 m-align-right">
+                        <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_04_57%20AM.png" alt="Laneige Campaign 03">
+                        <figcaption class="meta muted">CAMP 02 / LIGHTING</figcaption>
+                    </figure>
+                </div>
+            </article>
+
+            <!-- CAMPAIGN 03: SKINELLA -->
+            <article class="campaign">
+                <div class="campaign-info">
+                    <div class="meta muted mb-2">03 / SKINCARE</div>
+                    <h2 class="heading">SKINELLA DE-TAN<br>FACE MASK</h2>
+                    <p class="body-text">A fresh, sunlit campaign pairing vivid colour and natural skin textures with a playful approach to product storytelling.</p>
+                    <div class="tags meta muted">
+                        <span>AI GENERATION</span>
+                        <span>ART DIRECTION</span>
+                        <span>IMAGE COMPOSITING</span>
+                    </div>
+                </div>
+                
+                <div class="campaign-visuals">
+                    <figure class="m-w-100">
+                       <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_38_20%20AM.png" alt="Skinella Campaign 01">
+                        <figcaption class="meta muted">CAMP 03 / FOCUS</figcaption>
+                    </figure>
+                    <figure class="m-w-82 m-align-right">
+                        <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_38_31%20AM.png" alt="Skinella Campaign 02">
+                        <figcaption class="meta muted">CAMP 03 / ENVIRONMENT</figcaption>
+                    </figure>
+                    <figure class="m-w-100">
+                        <img src="./pictures/ChatGPT%20Image%20Sep%209,%202026,%2003_38_43%20AM.png" alt="Skinella Campaign 03">
+                        <figcaption class="meta muted">CAMP 03 / APPLICATION</figcaption>
+                    </figure>
+                </div>
+            </article>
+
+            <!-- CAMPAIGN 04: IIMB DBE -->
+            <article class="campaign">
+                <div class="campaign-info">
+                    <div class="meta muted mb-2">04 / PRINT & INFORMATION DESIGN</div>
+                    <h2 class="heading">IIM BANGALORE<br>DBE</h2>
+                    <p class="body-text">A programme brochure designed to turn a dense amount of information into a clear, physical reading experience.</p>
+                    <div class="tags meta muted">
+                        <span>PRINT DESIGN</span>
+                        <span>INFORMATION DESIGN</span>
+                        <span>EDITORIAL LAYOUT</span>
+                        <span>PROTOTYPING</span>
+                    </div>
+                </div>
+                
+                <div class="campaign-visuals comp-4">
+                    <figure class="m-w-100">
+                        <img src="./pictures/1.png" alt="IIMB DBE Brochure Spread 1">
+                        <figcaption class="meta muted">CAMP 04 / SPREAD 01</figcaption>
+                    </figure>
+                    <figure class="m-w-88 m-align-right">
+                        <img src="./pictures/2.png" alt="IIMB DBE Brochure Spread 2">
+                        <figcaption class="meta muted">CAMP 04 / SPREAD 02</figcaption>
+                    </figure>
+                </div>
+            </article>
+
+            <!-- CAMPAIGN 05: EVENT & CAMPAIGN DESIGN -->
+            <article class="campaign">
+                <div class="campaign-info">
+                    <div class="meta muted mb-2">05 / EVENT & CAMPAIGN DESIGN</div>
+                    <h2 class="heading">DESIGNING FOR EVENTS,<br>PEOPLE AND<br>PARTICIPATION.</h2>
+                    <p class="body-text">A selection of visual communication created for student-led events and initiatives, spanning technology, entrepreneurship and campus competition.</p>
+                    <div class="tags meta muted">
+                        <span>EVENT DESIGN</span>
+                        <span>CAMPAIGN DESIGN</span>
+                        <span>SOCIAL CONTENT</span>
+                        <span>VISUAL DIRECTION</span>
+                    </div>
+                </div>
+                
+                <div class="campaign-visuals comp-5">
+                    <figure class="m-w-100">
+                        <img src="./pictures/Shadow a Startup Founder.png" alt="Vibecoding Hackathon">
+                        <figcaption class="meta muted">CAMP 05 / SHADOW A STARTUP FOUNDER</figcaption>
+                    </figure>
+                    <figure class="m-w-88 m-align-right">
+                        <img src="./pictures/Your paragraph text.png" alt="Shadow a Startup Founder">
+                        <figcaption class="meta muted">CAMP 05 / QUIZ WAR</figcaption>
+                    </figure>
+                    <figure class="m-w-100">
+                        <img src="./pictures/Q.png" alt="Quiz War">
+                        <figcaption class="meta muted">CAMP 05 / QUIZ COMPETITION</figcaption>
+                    </figure>
+                </div>
+            </article>
+        </main>
+
+        <!-- CONTACT -->
+        <footer id="contact" class="contact">
+            <div class="meta muted">CONTACT</div>
+            <p class="contact-text">
+                Available for visual design,<br>
+                AI-assisted image making,<br>
+                art direction<br>
+                and creative projects.
+            </p>
+            <div class="contact-links meta">
+                <a href="mailto:itsmayukhsaha@gmail.com">EMAIL</a>
+                <a href="https://www.instagram.com/mayukh.saha/">INSTAGRAM</a>
+                <a href="https://www.linkedin.com/in/mayukh-saha2004/">LINKEDIN</a>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Lenis Smooth Scrolling CDN -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            let lenis;
+
+            if (!prefersReducedMotion && window.innerWidth >= 900) {
+                lenis = new Lenis({
+                    duration: 1.5, 
+                    smoothWheel: true,
+                    smoothTouch: false,
+                });
+
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
+                requestAnimationFrame(raf);
+            }
+
+            const images = document.querySelectorAll('.campaign-visuals figure img');
+            let activeImage = null;
+            let clone = null;
+            let isClosing = false;
+            let backdrop = document.createElement('div');
+            
+            backdrop.className = 'zoom-backdrop';
+            document.body.appendChild(backdrop);
+
+            const closeImage = () => {
+                if (!activeImage || !clone || isClosing) return;
+                isClosing = true;
+
+                const rect = activeImage.getBoundingClientRect();
+                
+                clone.style.transform = `translate(${rect.left}px, ${rect.top}px) scale(1)`;
+                backdrop.classList.remove('active');
+
+                const cleanup = (e) => {
+                    if (e && e.propertyName && e.propertyName !== 'transform') return;
+                    
+                    if (!prefersReducedMotion) {
+                        clone.removeEventListener('transitionend', cleanup);
+                    }
+
+                    // 1. Temporarily disable the CSS transition on the original image so it appears instantly
+                    if (activeImage) {
+                        activeImage.style.transition = 'none';
+                        activeImage.style.opacity = '1';
+                    }
+                    
+                    // 2. Wait for the browser to paint the original image before removing the clone
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            if (clone && clone.parentNode) clone.parentNode.removeChild(clone);
+                            
+                            // 3. Restore the inline styles back to normal for future hovers/clicks
+                            if (activeImage) {
+                                activeImage.style.transition = '';
+                            }
+                            
+                            if (lenis) lenis.start();
+                            document.body.classList.remove('is-zoomed');
+                            
+                            activeImage = null;
+                            clone = null;
+                            isClosing = false;
+                        });
+                    });
+                };
+
+                if (prefersReducedMotion) {
+                    cleanup();
+                } else {
+                    clone.addEventListener('transitionend', cleanup);
+                }
+            };
+
+            images.forEach(img => {
+                img.setAttribute('tabindex', '0');
+                
+                const openImage = () => {
+                    if (activeImage || isClosing) return;
+                    activeImage = img;
+
+                    const rect = img.getBoundingClientRect();
+                    
+                    clone = img.cloneNode();
+                    clone.className = 'zoom-clone';
+                    
+                    clone.style.width = `${rect.width}px`;
+                    clone.style.height = `${rect.height}px`;
+                    clone.style.left = `0px`; 
+                    clone.style.top = `0px`;
+                    clone.style.transform = `translate(${rect.left}px, ${rect.top}px) scale(1)`;
+                    
+                    document.body.appendChild(clone);
+                    
+                    activeImage.style.opacity = '0';
+                    
+                    const vw = window.innerWidth;
+                    const vh = window.innerHeight;
+                    const maxWidth = vw * 0.9;
+                    const maxHeight = vh * 0.9;
+                    
+                    const scale = Math.min(maxWidth / rect.width, maxHeight / rect.height);
+                    const targetWidth = rect.width * scale;
+                    const targetHeight = rect.height * scale;
+                    const targetX = (vw - targetWidth) / 2;
+                    const targetY = (vh - targetHeight) / 2;
+
+                    clone.getBoundingClientRect(); 
+
+                    clone.classList.add('transitioning');
+                    clone.style.transform = `translate(${targetX}px, ${targetY}px) scale(${scale})`;
+                    clone.style.pointerEvents = 'all';
+
+                    backdrop.classList.add('active');
+                    
+                    if (lenis) lenis.stop();
+                    document.body.classList.add('is-zoomed');
+
+                    clone.addEventListener('click', closeImage);
+                };
+
+                img.addEventListener('click', openImage);
+                img.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openImage();
+                    }
+                });
+            });
+
+            backdrop.addEventListener('click', closeImage);
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeImage();
+            });
+
+            window.addEventListener('resize', () => {
+                if (activeImage) closeImage();
+            });
+        });
+    </script>
+</body>
+</html>
